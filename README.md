@@ -60,7 +60,7 @@ A clean, production-ready Laravel boilerplate with admin panel, user management,
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/ubaidkodekaizen/laravel-boilerplate.git
 cd laravel-boilerplate
 ```
 
