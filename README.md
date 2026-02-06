@@ -200,16 +200,21 @@ FIREBASE_PROJECT_ID=your-project-id
 
 Configure your email service in `.env` based on your provider:
 
-**SMTP:**
+**SMTP (Recommended for Development - Use Mailtrap):**
 ```env
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.mailtrap.io
 MAIL_PORT=2525
-MAIL_USERNAME=your_username
-MAIL_PASSWORD=your_password
+MAIL_USERNAME=your_mailtrap_username
+MAIL_PASSWORD=your_mailtrap_password
 MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS=noreply@example.com
 MAIL_FROM_NAME="${APP_NAME}"
+```
+
+**For Testing (Logs emails to storage/logs/laravel.log):**
+```env
+MAIL_MAILER=log
 ```
 
 **Mailgun:**
@@ -217,13 +222,24 @@ MAIL_FROM_NAME="${APP_NAME}"
 MAIL_MAILER=mailgun
 MAILGUN_DOMAIN=your_domain
 MAILGUN_SECRET=your_secret
+MAIL_FROM_ADDRESS=noreply@your_domain.com
+MAIL_FROM_NAME="${APP_NAME}"
 ```
 
 **Postmark:**
 ```env
 MAIL_MAILER=postmark
 POSTMARK_TOKEN=your_token
+MAIL_FROM_ADDRESS=noreply@example.com
+MAIL_FROM_NAME="${APP_NAME}"
 ```
+
+**Test Email Functionality:**
+```bash
+php artisan email:test all your@email.com
+```
+
+This will send test emails for password reset, email verification, and welcome emails.
 
 ## 📡 API Usage
 
@@ -275,16 +291,52 @@ GET /api/user
 Authorization: Bearer {token}
 ```
 
+Response:
+```json
+{
+    "status": true,
+    "data": {
+        "user": {
+            "id": 1,
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "john@example.com",
+            ...
+        }
+    }
+}
+```
+
 ### Update Profile
 ```bash
-POST /api/user/update-profile
+PUT /api/user
 Authorization: Bearer {token}
 Content-Type: application/json
 
 {
     "first_name": "John",
     "last_name": "Doe",
+    "email": "john@example.com",
+    "password": "newpassword123",
+    "password_confirmation": "newpassword123"
+}
+```
+
+### Forgot Password
+```bash
+POST /api/forgot-password
+Content-Type: application/json
+
+{
     "email": "john@example.com"
+}
+```
+
+Response:
+```json
+{
+    "status": true,
+    "message": "Password reset link sent to your email"
 }
 ```
 

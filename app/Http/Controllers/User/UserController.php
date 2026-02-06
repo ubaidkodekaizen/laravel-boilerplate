@@ -7,6 +7,10 @@ use App\Models\Users\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use App\Mail\EmailVerificationMail;
 
 class UserController extends Controller
 {
@@ -41,9 +45,28 @@ class UserController extends Controller
             'role_id' => 4, // Default user role
         ]);
 
+        // Generate email verification token
+        $token = Str::random(64);
+        DB::table('email_verification_tokens')->insert([
+            'email' => $user->email,
+            'token' => $token,
+            'created_at' => now(),
+        ]);
+
+        // Send verification email
+        try {
+            Mail::to($user->email)->send(new EmailVerificationMail($token, $user->first_name));
+        } catch (\Exception $e) {
+            // Log error but don't fail registration
+            \Log::error('Email verification failed to send', [
+                'email' => $user->email,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
         Auth::login($user);
 
-        return redirect()->route('dashboard')->with('success', 'Registration successful!');
+        return redirect()->route('dashboard')->with('success', 'Registration successful! Please check your email to verify your account.');
     }
 
     /**

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use App\Mail\PasswordReset;
+use App\Mail\PasswordResetMail;
 use App\Models\Users\User;
 
 class PasswordResetController extends Controller
@@ -33,7 +33,7 @@ class PasswordResetController extends Controller
         );
 
         try {
-            Mail::to($request->email)->queue(new PasswordReset($token));
+            Mail::to($request->email)->send(new PasswordResetMail($token));
             
             Log::info('Password reset email queued successfully', ['email' => $request->email]);
         } catch (\Exception $e) {
@@ -64,7 +64,7 @@ class PasswordResetController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email|exists:users,email',
-            'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:8|confirmed',
         ]);
 
         $resetRecord = DB::table('password_reset_tokens')
