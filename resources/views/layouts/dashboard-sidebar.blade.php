@@ -201,8 +201,8 @@
                 </a>
             </li>
             <li class="nav-items">
-                <a href="{{ route('user.details.show') }}"
-                    class="{{ request()->routeIs('user.details.show') ? 'active' : '' }}">
+                <a href="{{ route('profile') }}"
+                    class="{{ request()->routeIs('profile') ? 'active' : '' }}">
 
                     <img src="{{ asset('assets/images/dashboard/sidebarMyProfileIcon.svg') }}" alt="">
                     <!-- My Profile -->
@@ -210,41 +210,12 @@
                 </a>
             </li>
             <li class="nav-items">
-                <a href="{{ route('user.products') }}"
-                    class="{{ request()->routeIs('user.products') ? 'active' : '' }}">
+                <a href="{{ route('settings') }}"
+                    class="{{ request()->routeIs('settings') ? 'active' : '' }}">
 
                     <img src="{{ asset('assets/images/dashboard/sidebarProductIcon.svg') }}" alt="">
 
-                    <span class="menu-text">Products</span>
-                </a>
-            </li>
-            <li class="nav-items">
-                <a href="{{ route('user.services') }}"
-                    class="{{ request()->routeIs('user.services') ? 'active' : '' }}">
-
-                    <img src="{{ asset('assets/images/dashboard/sidebarServiceIcon.svg') }}" alt="">
-
-
-                    <span class="menu-text">Services</span>
-                </a>
-            </li>
-            <li class="nav-items">
-                <a href="{{ route('user.qualifications') }}"
-                    class="{{ request()->routeIs('user.qualifications') ? 'active' : '' }}">
-
-                    <img src="{{ asset('assets/images/dashboard/sidebarQualificationIcon.svg') }}" alt="">
-
-                    <span class="menu-text">Education</span>
-                </a>
-            </li>
-
-            <li class="nav-items">
-                <a href="{{ route('user.subscriptions') }}"
-                    class="{{ request()->routeIs('user.subscriptions') ? 'active' : '' }}">
-
-                    <img src="{{ asset('assets/images/dashboard/sidebarQualificationIcon.svg') }}" alt="">
-
-                    <span class="menu-text">Subscriptions</span>
+                    <span class="menu-text">Settings</span>
                 </a>
             </li>
 

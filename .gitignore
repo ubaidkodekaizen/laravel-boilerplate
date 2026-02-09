@@ -16,3 +16,12 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Temporary files
+temp_*.txt
+*.log
+code.md
+
+# Logs
+storage/logs/*.log
+!storage/logs/.gitkeep
